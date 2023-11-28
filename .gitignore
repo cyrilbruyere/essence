@@ -1,0 +1,11 @@
+# Configuration
+env/
+
+# Folder
+data/
+
+# File
+
+# Others
+**/__pycache__
+**/.ipynb_checkpoints

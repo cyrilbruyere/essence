@@ -154,20 +154,21 @@ Evolution du prix depuis 4 semaines :<br><br>
 msgtext = MIMEText(msg, 'html')
 
 msg = MIMEMultipart()
-msg['Subject'] = 'Ride status'
+msg['Subject'] = 'MAJ prix Diesel'
 msg.attach(msgtext)
 msg.attach(msgImage)
 
 port = 465
 smtp_server = 'smtp.gmail.com'
 user_email = os.environ.get('user_email')
+recipients_email = os.environ.get('recipients_email')
 email_token = os.environ.get('email_token')
 
 try:
     context = ssl.create_default_context() # ne fonctionne pas
     server = smtplib.SMTP_SSL(smtp_server, port, context = context)
     server.login(user_email, email_token)
-    server.sendmail(user_email, user_email, msg.as_string())
+    server.sendmail(user_email, recipients_email.split(','), msg.as_string())
 except:
     print('Something went wrong...')
 

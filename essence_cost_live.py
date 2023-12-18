@@ -1,18 +1,21 @@
-import pandas as pd
-import datetime as dt
+# Data access
 from zipfile import ZipFile
 from io import BytesIO
 import urllib.request as urllib2
+# Cleaning
+import pandas as pd
+import datetime as dt
 # Structure XML
 import xml.etree.ElementTree as et
 # Email
-import win32com.client as win32
-from pretty_html_table import build_table
-# Graphiques
-from pathlib import Path
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
+import os
+# Visuals
 import plotly.graph_objects as go
-import base64
-import time
+from pretty_html_table import build_table
 
 #####################
 ##### PRIX LIVE #####
@@ -121,45 +124,52 @@ df = df.reset_index()
 ##### DESIGN GRAFICS #####
 ##########################
 
-# Chemin de stockage des graphiques temporaires
-graf_name = 'priceline.png'
-graf_path = Path.cwd() / 'data' / 'carburants' / graf_name
-graf_path = str(graf_path).replace('\\', '/')
-
-# Création des graphiques
 graf = go.Figure()
 graf.update_layout(title = 'Evolution prix du gazole')
 graf.add_trace(go.Scatter(x = df['Dates'], y = df['RENAULT'].values, line_shape = 'hv', name = 'RENAULT'))
 graf.add_trace(go.Scatter(x = df['Dates'], y = df['CARREFOUR'].values, line_shape = 'hv', name = 'CARREFOUR'))
 graf.add_trace(go.Scatter(x = df['Dates'], y = df['INTERMARCHE'].values, line_shape = 'hv', name = 'INTERMARCHE'))
-graf.write_image(graf_path, format='png', engine='kaleido')
-time.sleep(2)
 
-# with open(graf_path, 'rb') as f:
-#         graf_content = f.read()
-# encoded_graf = base64.b64encode(graf_content).decode("utf-8")
+graf.write_image('essence.png')
 
 ############################
 ##### ENVOI DE L'EMAIL #####
 ############################
 
-outlook = win32.Dispatch('outlook.application')
-mail = outlook.CreateItem(0)
-mail.To = 'cyril.bruyere@gmail.com;noe.bruyere@gmail.com'
-mail.Subject = 'MAJ prix Gazole'
-attachment = mail.Attachments.Add(graf_path)
-attachment.PropertyAccessor.SetProperty('http://schemas.microsoft.com/mapi/proptag/0x3712001F', 'MyId1')
-mail.HTMLBody = """
-    Bonjour,<br><br>
-    Le prix du Gazole de vos stations préférées :<br><br>
-    {}<br>
-    <br>
-    Evolution du prix depuis 4 semaines :<br><br>
-    <img src='cid:MyId1'>
-""".format(build_table(live, 'blue_light', font_size='11px'))#, encoded_graf)
-mail.Send()
+# Images à envoyer
+with open('essence.png', 'rb') as file:
+    msgImage = MIMEImage(file.read())
+    msgImage.add_header('Content-ID', '<essence>')
 
-# <img src="data:image/png;base64,{}", width="750" height="450"/><br>
+# Texte à envoyer
+msg = """
+Bonjour,<br><br>
+Le prix du Gazole de vos stations préférées :<br><br>
+{}<br>
+<br>
+Evolution du prix depuis 4 semaines :<br><br>
+<img src='cid:essence'>
+""".format(build_table(live, 'blue_light', font_size='11px'))
+
+msgtext = MIMEText(msg, 'html')
+
+msg = MIMEMultipart()
+msg['Subject'] = 'Ride status'
+msg.attach(msgtext)
+msg.attach(msgImage)
+
+port = 465
+smtp_server = 'smtp.gmail.com'
+user_email = os.environ.get('user_email')
+email_token = os.environ.get('email_token')
+
+try:
+    context = ssl.create_default_context() # ne fonctionne pas
+    server = smtplib.SMTP_SSL(smtp_server, port, context = context)
+    server.login(user_email, email_token)
+    server.sendmail(user_email, user_email, msg.as_string())
+except:
+    print('Something went wrong...')
 
 
 

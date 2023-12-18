@@ -161,17 +161,15 @@ msg.attach(msgImage)
 port = 465
 smtp_server = 'smtp.gmail.com'
 user_email = os.environ.get('user_email')
-recipients_email = os.environ.get('recipients_email')
+recipients = os.environ.get('recipients')
 email_token = os.environ.get('email_token')
-print(recipients_email)
-recipients_email = recipients_email.split(',')
-print(recipients_email)
+print(recipients)
 
 try:
     context = ssl.create_default_context() # ne fonctionne pas
     server = smtplib.SMTP_SSL(smtp_server, port, context = context)
     server.login(user_email, email_token)
-    server.sendmail(user_email, recipients_email, msg.as_string())
+    server.sendmail(user_email, recipients, msg.as_string())
 except:
     print('Something went wrong...')
 

@@ -163,6 +163,7 @@ smtp_server = 'smtp.gmail.com'
 user_email = os.environ.get('user_email')
 recipients_email = os.environ.get('recipients_email')
 email_token = os.environ.get('email_token')
+print(recipients_email)
 
 try:
     context = ssl.create_default_context() # ne fonctionne pas

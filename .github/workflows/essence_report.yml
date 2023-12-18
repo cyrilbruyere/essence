@@ -1,4 +1,4 @@
-name : rwgps_report
+name : essence_report
 
 on:
   schedule:

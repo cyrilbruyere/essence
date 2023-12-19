@@ -163,13 +163,13 @@ smtp_server = 'smtp.gmail.com'
 user_email = os.environ.get('user_email')
 recipients = os.environ.get('recipients')
 email_token = os.environ.get('email_token')
-print(recipients)
+print(user_email)
 
 try:
     context = ssl.create_default_context() # ne fonctionne pas
     server = smtplib.SMTP_SSL(smtp_server, port, context = context)
     server.login(user_email, email_token)
-    server.sendmail(user_email, recipients, msg.as_string())
+    server.sendmail(user_email, user_email, msg.as_string())
 except:
     print('Something went wrong...')
 

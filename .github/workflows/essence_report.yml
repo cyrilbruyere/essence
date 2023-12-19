@@ -21,4 +21,5 @@ jobs:
         env:
           user_email: ${{ secrets.user_email }}
           email_token: ${{ secrets.email_token }}
+          recipients: ${{ secrets.recipients }}
         run: python essence_cost_live.py

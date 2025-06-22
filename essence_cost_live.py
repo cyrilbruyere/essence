@@ -111,10 +111,12 @@ df.loc[df['ID'] == '69700005', 'Enseignes'] = 'INTERMARCHE'
 
 df = df[['Enseignes', 'Dates', 'Prix']]
 df['Prix'] = df['Prix'].astype(float)
-df['Dates'] = pd.to_datetime(df['Dates'], yearfirst = True).dt.date
-df = df.drop_duplicates(['Enseignes', 'Dates'])
+df['DATE'] = pd.to_datetime(df['Dates'], yearfirst = True).dt.date
+df['MMJJ'] = pd.to_datetime(df['Dates'], yearfirst = True).dt.date.month * 100 + pd.to_datetime(df['Dates'], yearfirst = True).dt.date.day
+df = df.drop(['Dates'], axis = 1)
+df = df.drop_duplicates(['Enseignes', 'DATE'])
 
-df = df.set_index(['Enseignes', 'Dates'])
+df = df.set_index(['Enseignes', 'MMJJ', 'Dates'])
 df = df.unstack('Enseignes')
 df = df.fillna(method = 'ffill')
 df = df.iloc[-21:, :]
@@ -134,10 +136,9 @@ df = df.reset_index()
 # graf.write_image('essence.png')
 
 # Avec Matplotlib
-df['MMDD'] = df['Dates'].month *100 + df['Dates'].day
-plt.plot(x = df['MMDD'].values, y = df['RENAULT'].values, color = 'g', label ='RENAULT')
-plt.plot(x = df['MMDD'].values, y = df['CARREFOUR'].values, color = 'b', label ='CARREFOUR')
-plt.plot(x = df['MMDD'].values, y = df['INTERMARCHE'].values, color = 'r', label ='INTERMARCHE')
+plt.plot(x = df['MMJJ'].values, y = df['RENAULT'].values, color = 'g', label ='RENAULT')
+plt.plot(x = df['MMJJ'].values, y = df['CARREFOUR'].values, color = 'b', label ='CARREFOUR')
+plt.plot(x = df['MMJJ'].values, y = df['INTERMARCHE'].values, color = 'r', label ='INTERMARCHE')
 plt.legend()
 plt.savefig("essence.png")
 

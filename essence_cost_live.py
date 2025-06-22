@@ -136,9 +136,9 @@ df = df.reset_index()
 # graf.write_image('essence.png')
 
 # Avec Matplotlib
-plt.plot(x = df['MMJJ'].values, y = df['RENAULT'].values, color = 'g', label ='RENAULT')
-plt.plot(x = df['MMJJ'].values, y = df['CARREFOUR'].values, color = 'b', label ='CARREFOUR')
-plt.plot(x = df['MMJJ'].values, y = df['INTERMARCHE'].values, color = 'r', label ='INTERMARCHE')
+plt.plot(df['MMJJ'].values, df['RENAULT'].values, color = 'g', label ='RENAULT')
+plt.plot(df['MMJJ'].values, df['CARREFOUR'].values, color = 'b', label ='CARREFOUR')
+plt.plot(df['MMJJ'].values, df['INTERMARCHE'].values, color = 'r', label ='INTERMARCHE')
 plt.legend()
 plt.savefig("essence.png")
 

@@ -134,7 +134,7 @@ df = df.reset_index()
 # graf.write_image('essence.png')
 
 # Avec Matplotlib
-df['MMDD'] = df['Dates'].dt.month *100 + df['Dates'].dt.day
+df['MMDD'] = df['Dates'].month *100 + df['Dates'].day
 plt.plot(x = df['MMDD'].values, y = df['RENAULT'].values, color = 'g', label ='RENAULT')
 plt.plot(x = df['MMDD'].values, y = df['CARREFOUR'].values, color = 'b', label ='CARREFOUR')
 plt.plot(x = df['MMDD'].values, y = df['INTERMARCHE'].values, color = 'r', label ='INTERMARCHE')

@@ -140,6 +140,7 @@ df = df.reset_index()
 plt.plot(df['MMJJ'].values, df['RENAULT'].values, color = 'g', label ='RENAULT')
 plt.plot(df['MMJJ'].values, df['CARREFOUR'].values, color = 'b', label ='CARREFOUR')
 plt.plot(df['MMJJ'].values, df['INTERMARCHE'].values, color = 'r', label ='INTERMARCHE')
+plt.xticks(rotation = 90)
 plt.legend()
 plt.savefig("essence.png")
 

@@ -134,9 +134,11 @@ df = df.reset_index()
 # graf.write_image('essence.png')
 
 # Avec Matplotlib
-plt.plot(df['RENAULT'].values, label ='RENAULT', color = 'pink')
-plt.plot(df['CARREFOUR'].values, '-.', label ='CARREFOUR', color = 'b')
-plt.plot(df['INTERMARCHE'].values, '-.', label ='INTERMARCHE', color = 'r')
+df['MMDD'] = df['Dates'].dt.month *100 + df['Dates'].dt.day
+plt.plot(x = df['MMDD'].values, y = df['RENAULT'].values, '-.', label ='RENAULT', color = 'black')
+plt.plot(x = df['MMDD'].values, y = df['CARREFOUR'].values, '-.', label ='CARREFOUR', color = 'b')
+plt.plot(x = df['MMDD'].values, y = df['INTERMARCHE'].values, '-.', label ='INTERMARCHE', color = 'r')
+plt.legend()
 plt.savefig("essence.png")
 
 ############################

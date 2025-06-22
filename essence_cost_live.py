@@ -14,8 +14,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 import os
 # Visuals
-import plotly.graph_objects as go
-from pretty_html_table import build_table
+import matplotlib.pyplot as plt
+# import plotly.graph_objects as go
+# from pretty_html_table import build_table
 
 #####################
 ##### PRIX LIVE #####
@@ -124,13 +125,18 @@ df = df.reset_index()
 ##### DESIGN GRAFICS #####
 ##########################
 
-graf = go.Figure()
-graf.update_layout(title = 'Evolution prix du gazole')
-graf.add_trace(go.Scatter(x = df['Dates'], y = df['RENAULT'].values, line_shape = 'hv', name = 'RENAULT'))
-graf.add_trace(go.Scatter(x = df['Dates'], y = df['CARREFOUR'].values, line_shape = 'hv', name = 'CARREFOUR'))
-graf.add_trace(go.Scatter(x = df['Dates'], y = df['INTERMARCHE'].values, line_shape = 'hv', name = 'INTERMARCHE'))
+# graf = go.Figure()
+# graf.update_layout(title = 'Evolution prix du gazole')
+# graf.add_trace(go.Scatter(x = df['Dates'], y = df['RENAULT'].values, line_shape = 'hv', name = 'RENAULT'))
+# graf.add_trace(go.Scatter(x = df['Dates'], y = df['CARREFOUR'].values, line_shape = 'hv', name = 'CARREFOUR'))
+# graf.add_trace(go.Scatter(x = df['Dates'], y = df['INTERMARCHE'].values, line_shape = 'hv', name = 'INTERMARCHE'))
 
-graf.write_image('essence.png')
+# graf.write_image('essence.png')
+
+# Avec Matplotlib
+ax = df.plot.area(x = 'DATE', y = ['RENAULT', 'CARREFOUR', 'INTERMARCHE'], color = ['g', 'b', 'r'])
+fig = ax.get_figure()
+fig.savefig("essence.png")
 
 ############################
 ##### ENVOI DE L'EMAIL #####

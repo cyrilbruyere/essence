@@ -134,9 +134,10 @@ df = df.reset_index()
 # graf.write_image('essence.png')
 
 # Avec Matplotlib
-ax = df.plot.area(x = 'Dates', y = ['RENAULT', 'CARREFOUR', 'INTERMARCHE'], color = ['g', 'b', 'r'])
-fig = ax.get_figure()
-fig.savefig("essence.png")
+plt.plot(df['RENAULT'].values, label ='RENAULT', color = 'pink')
+plt.plot(df['CARREFOUR'].values, '-.', label ='CARREFOUR', color = 'b')
+plt.plot(df['INTERMARCHE'].values, '-.', label ='INTERMARCHE', color = 'r')
+plt.savefig("essence.png")
 
 ############################
 ##### ENVOI DE L'EMAIL #####

@@ -135,9 +135,9 @@ df = df.reset_index()
 
 # Avec Matplotlib
 df['MMDD'] = df['Dates'].dt.month *100 + df['Dates'].dt.day
-plt.plot(x = df['MMDD'].values, y = df['RENAULT'].values, '-.', 'g', label ='RENAULT')
-plt.plot(x = df['MMDD'].values, y = df['CARREFOUR'].values, '-.', 'b', label ='CARREFOUR')
-plt.plot(x = df['MMDD'].values, y = df['INTERMARCHE'].values, '-.', 'r', label ='INTERMARCHE')
+plt.plot(x = df['MMDD'].values, y = df['RENAULT'].values, color = 'g', label ='RENAULT')
+plt.plot(x = df['MMDD'].values, y = df['CARREFOUR'].values, color = 'b', label ='CARREFOUR')
+plt.plot(x = df['MMDD'].values, y = df['INTERMARCHE'].values, color = 'r', label ='INTERMARCHE')
 plt.legend()
 plt.savefig("essence.png")
 

@@ -112,7 +112,7 @@ df.loc[df['ID'] == '69700005', 'Enseignes'] = 'INTERMARCHE'
 df = df[['Enseignes', 'Dates', 'Prix']]
 df['Prix'] = df['Prix'].astype(float)
 df['DATE'] = pd.to_datetime(df['Dates'], yearfirst = True).dt.date
-df['MMJJ'] = pd.to_datetime(df['Dates'], yearfirst = True).dt.date.month * 100 + pd.to_datetime(df['Dates'], yearfirst = True).dt.date.day
+df['MMJJ'] = pd.to_datetime(df['Dates'], yearfirst = True).month * 100 + pd.to_datetime(df['Dates'], yearfirst = True).day
 df = df.drop(['Dates'], axis = 1)
 df = df.drop_duplicates(['Enseignes', 'DATE'])
 

@@ -116,7 +116,7 @@ df['MMJJ'] = pd.to_datetime(df['Dates'], yearfirst = True).dt.month * 100 + pd.t
 df = df.drop(['Dates'], axis = 1)
 df = df.drop_duplicates(['Enseignes', 'DATE'])
 
-df = df.set_index(['Enseignes', 'MMJJ', 'Dates'])
+df = df.set_index(['Enseignes', 'MMJJ', 'DATE'])
 df = df.unstack('Enseignes')
 df = df.fillna(method = 'ffill')
 df = df.iloc[-21:, :]

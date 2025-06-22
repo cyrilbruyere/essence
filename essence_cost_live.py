@@ -113,6 +113,7 @@ df = df[['Enseignes', 'Dates', 'Prix']]
 df['Prix'] = df['Prix'].astype(float)
 df['DATE'] = pd.to_datetime(df['Dates'], yearfirst = True).dt.date
 df['MMJJ'] = pd.to_datetime(df['Dates'], yearfirst = True).dt.month * 100 + pd.to_datetime(df['Dates'], yearfirst = True).dt.day
+df['MMJJ'] = df['MMJJ'].astype(str)
 df = df.drop(['Dates'], axis = 1)
 df = df.drop_duplicates(['Enseignes', 'DATE'])
 

@@ -142,6 +142,7 @@ plt.plot(df['MMJJ'].values, df['CARREFOUR'].values, color = 'b', label ='CARREFO
 plt.plot(df['MMJJ'].values, df['INTERMARCHE'].values, color = 'r', label ='INTERMARCHE')
 plt.xticks(rotation = 90)
 plt.legend()
+plt.grid()
 plt.savefig("essence.png")
 
 ############################
